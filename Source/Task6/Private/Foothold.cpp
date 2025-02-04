@@ -12,10 +12,7 @@ AFoothold::AFoothold()
 
 	_Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	_Mesh->SetupAttachment(_SceneRoot);
-
-	_BoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
-	_BoxCollider->SetupAttachment(_SceneRoot);
-
+	
 
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -25,25 +22,34 @@ AFoothold::AFoothold()
 void AFoothold::BeginPlay()
 {
 	Super::BeginPlay();
+
+	DefalutPos = this->GetActorLocation();
 	//_BoxCollider->OnComponentBeginOverlap.AddDynamic(this, &AFoothold::BeginOverlap);
 	
 }
 
-void AFoothold::SetTriggerFlag()
-{
-	_triggerFlag = true;
-}
 
 // Called every frame
 void AFoothold::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (CurrentDistance > Distance)
+	{
+		DefalutPos = this->GetActorLocation();
+		speedX *= -1;
+		speedY *= -1;
+		speedZ *= -1;
+
+	}
+
+
+	AddActorWorldOffset(FVector(speedX * DeltaTime, speedY * DeltaTime, speedZ * DeltaTime));
+
+
+	CurrentDistance = FVector::Distance(DefalutPos, this->GetActorLocation());
 
 }
 
-void AFoothold::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	UE_LOG(LogTemp, Warning, TEXT("OnbeginOverlap!"));
-}
+
 

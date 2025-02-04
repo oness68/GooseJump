@@ -14,40 +14,36 @@ class TASK6_API AFoothold : public AActor
 	
 private:
 
-	UPROPERTY(VisibleAnywhere, Category = "FoolHold|Property")
-	float _onitTime=0.0f;
-
-	UPROPERTY(VisibleAnywhere, Category = "FoolHold|Property")
-	bool _triggerFlag = false;
-
-
-
 	AFoothold();
-	
+	FVector DefalutPos;
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "FoolHold|Property")
-	float _lifetime = 3.0f;
+	
 	// Called when the game starts or when spawned
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FootHold|Component")
 	UStaticMeshComponent* _Mesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FootHold|Component")
-	UBoxComponent* _BoxCollider;
 
 	USceneComponent* _SceneRoot;
 	virtual void BeginPlay() override;
 
 
 public:	
-	
-	UFUNCTION()
-	void SetTriggerFlag();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FoolHold|Property")
+	float Distance = 100.0f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "FoolHold|Property")
+	float CurrentDistance;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FoolHold|Property")
+	float speedZ = 10.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FoolHold|Property")
+	float speedX = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FoolHold|Property")
+	float speedY = 0.0f;;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	UFUNCTION(BlueprintCallable)
-	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	
 
